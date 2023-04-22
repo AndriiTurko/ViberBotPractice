@@ -1,4 +1,4 @@
-﻿namespace practice.BLL.Middleware
+﻿namespace practice.Middleware
 {
     public static class ConfigureMiddleware
     {

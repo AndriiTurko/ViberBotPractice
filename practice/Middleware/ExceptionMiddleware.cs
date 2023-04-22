@@ -1,7 +1,7 @@
 ﻿using practice.DAL.Models;
 using System.Net;
 
-namespace practice.BLL.Middleware
+namespace practice.Middleware
 {
     public class ExceptionMiddleware
     {

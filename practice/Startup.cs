@@ -4,12 +4,12 @@ using practice.BLL.Services;
 using practice.DAL;
 using practice.DAL.Infrastructure;
 using practice.DAL.Interfaces;
-using practice.BLL.Middleware;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http.Features;
 using Newtonsoft.Json;
 using static System.Net.WebRequestMethods;
 using System.Reflection.PortableExecutable;
+using practice.Middleware;
 
 namespace practice
 {
@@ -66,30 +66,6 @@ namespace practice
             {
                 endpoints.MapControllers();
             });
-
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers.Add("Upgrade", "h2c");
-                context.Response.Headers.Add("Connection", "Upgrade");
-
-                await next();
-
-                if (context.Features.Get<IHttpResponseFeature>().StatusCode == 101 &&
-                    context.Request.Headers.TryGetValue("Upgrade", out var upgradeHeader) &&
-                    upgradeHeader == "h2c")
-                {
-                    await context.Response.WriteAsync("HTTP/2 is enabled!");
-                }
-            });
-
-            //app.UseKestrel(options =>
-            //{
-            //    options.Listen(IPAddress.Any, 5000, listenOptions =>
-            //    {
-            //        listenOptions.Protocols = HttpProtocols.Http2;
-            //    });
-            //});
-
         }
     }
 }
